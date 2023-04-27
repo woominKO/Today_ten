@@ -79,9 +79,10 @@ const firebaseConfig = {
           // 새로운 <div> 요소를 생성합니다.
           function create() {
             const inputvalue = document.querySelector('input').value.toString();
-            const newSrc = inputvalue.replace('https://youtu.be/', 'https://www.youtube.com/embed/');
-          
+            
             if (inputvalue.includes('https://youtu.be/')) {
+              const newSrc = inputvalue.replace('https://youtu.be/', 'https://www.youtube.com/embed/');
+          
               const newDiv = document.createElement('iframe');
               newDiv.setAttribute('class', 'songvideo');
               newDiv.setAttribute('src', newSrc);
@@ -90,8 +91,25 @@ const firebaseConfig = {
           
               const existingElement = document.getElementById('songs');
               existingElement.appendChild(newDiv);
-            } else {
-              alert('유효한 유튜브 공유 링크를 입력하세요.');
+
+              
+            } 
+            else if((inputvalue.includes('https://www.youtube.com/watch?v=')==true)&&(inputvalue.includes('&t=') == false)){
+              const newSrc = inputvalue.replace('https://www.youtube.com/watch?v=', 'https://www.youtube.com/embed/');
+          
+              const newDiv = document.createElement('iframe');
+              newDiv.setAttribute('class', 'songvideo');
+              newDiv.setAttribute('src', newSrc);
+              newDiv.setAttribute('width', '420');
+              newDiv.setAttribute('height', '315');
+          
+              const existingElement = document.getElementById('songs');
+              existingElement.appendChild(newDiv);
+
+              }
+            
+            else {
+              alert('유효한 유튜브 공유 링크를 입력하세요. 또는 유튜브 링크에 타임라인 url(&t=~)을 제거해 주세요');
             }
           }
           
