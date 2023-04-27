@@ -81,7 +81,7 @@ const firebaseConfig = {
             const inputvalue = document.querySelector('input').value.toString();
             
             if (inputvalue.includes('https://youtu.be/')) {
-              const newSrc = inputvalue.replace('https://youtu.be/', 'https://www.youtube.com/embed/');
+              let newSrc = inputvalue.replace('https://youtu.be/', 'https://www.youtube.com/embed/');
           
               const newDiv = document.createElement('iframe');
               newDiv.setAttribute('class', 'songvideo');
@@ -94,8 +94,25 @@ const firebaseConfig = {
 
               
             } 
-            else if((inputvalue.includes('https://www.youtube.com/watch?v=')==true)&&(inputvalue.includes('&t=') == false)){
+            else if((inputvalue.includes('https://www.youtube.com/watch?v=')==true)&&(inputvalue.includes('&t=') == true)){
+              let newSrc = inputvalue.replace('https://www.youtube.com/watch?v=', 'https://www.youtube.com/embed/');
+               newSrc =  newSrc.slice(0, newSrc.indexOf("&t="));
+
+          
+              const newDiv = document.createElement('iframe');
+              newDiv.setAttribute('class', 'songvideo');
+              newDiv.setAttribute('src', newSrc);
+              newDiv.setAttribute('width', '420');
+              newDiv.setAttribute('height', '315');
+          
+              const existingElement = document.getElementById('songs');
+              existingElement.appendChild(newDiv);
+
+              } 
+              else if((inputvalue.includes('https://www.youtube.com/watch?v=')==true)&&(inputvalue.includes('&t=') == false)){
               const newSrc = inputvalue.replace('https://www.youtube.com/watch?v=', 'https://www.youtube.com/embed/');
+               
+
           
               const newDiv = document.createElement('iframe');
               newDiv.setAttribute('class', 'songvideo');
