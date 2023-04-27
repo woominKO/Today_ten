@@ -53,7 +53,7 @@ const firebaseConfig = {
             console.log('error:', error);
           });
       });
-     
+     //fdfdfdf
 
       const signOutButton = document.getElementById('sign-out-button');
       signOutButton.addEventListener('click', () => {
