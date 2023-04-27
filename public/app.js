@@ -73,13 +73,45 @@ const firebaseConfig = {
             // 로그인된 경우 로그아웃 버튼을 표시하고, 로그인 버튼을 숨김
             document.getElementById('sign-out-button').style.display = 'block';
             document.getElementById('login-button').style.display = 'none';
-            //
+            document.getElementById('searchjoygo').style.display = 'block ';
+            //본격적인 작동로직 쓰기
+           
+          // 새로운 <div> 요소를 생성합니다.
+          function create() {
+            const inputvalue = document.querySelector('input').value.toString();
+            const newSrc = inputvalue.replace('https://youtu.be/', 'https://www.youtube.com/embed/');
+          
+            if (inputvalue.includes('https://youtu.be/')) {
+              const newDiv = document.createElement('iframe');
+              newDiv.setAttribute('class', 'songvideo');
+              newDiv.setAttribute('src', newSrc);
+              newDiv.setAttribute('width', '420');
+              newDiv.setAttribute('height', '315');
+          
+              const existingElement = document.getElementById('songs');
+              existingElement.appendChild(newDiv);
+            } else {
+              alert('유효한 유튜브 공유 링크를 입력하세요.');
+            }
+          }
+          
+const add = document.getElementById('add');
+add.addEventListener('click', (event) => {
+  event.preventDefault(); // 새로고침 방지
+ create();
+
+});
+
+            
           } else {
+            
            
           }
         } else {
           // 로그인되지 않은 경우 로그인 버튼을 표시하고, 로그아웃 버튼을 숨김
           document.getElementById('sign-out-button').style.display = 'none';
-          document.getElementById('login-button').style.display = 'block';
+          document.getElementById('login-button').style.display = 'block ';
+          document.getElementById('searchjoygo').style.display = 'none';
+           
         }
       });
