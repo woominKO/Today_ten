@@ -95,8 +95,8 @@ auth.onAuthStateChanged((user) => {
           newDiv.setAttribute('width', '420');
           newDiv.setAttribute('height', '315');
 
-          // const existingElement = document.getElementById('songs');
-          // existingElement.appendChild(newDiv);
+          const existingElement = document.getElementById('songs');
+          existingElement.appendChild(newDiv);
           // //새로만들어진 divs컬렉션에 추가된내용 콘솔에 찍음
 
           addDoc(collection(firestore, 'divs'), { newSrc: newSrc })
