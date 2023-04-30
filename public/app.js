@@ -107,10 +107,10 @@ auth.onAuthStateChanged((user) => {
               console.error('Error adding document: ', error);
             });
 
-          // ------------------------
+          console.log(newSrc);
         } else if (
-          inputvalue.includes('https://www.youtube.com/watch?v=') == true &&
-          inputvalue.includes('&t=') == true
+          inputvalue.includes('https://www.youtube.com/watch?v=') &&
+          inputvalue.includes('&t=')
         ) {
           let newSrc = inputvalue.replace(
             'https://www.youtube.com/watch?v=',
@@ -134,11 +134,11 @@ auth.onAuthStateChanged((user) => {
             .catch((error) => {
               console.error('Error adding document: ', error);
             });
-
-          // ------------------------
+          console.log(newSrc);
         } else if (
           inputvalue.includes('https://www.youtube.com/watch?v=') == true &&
-          inputvalue.includes('&t=') == false
+          inputvalue.includes('&t=') == false &&
+          inputvalue.includes('&pp=') == false
         ) {
           const newSrc = inputvalue.replace(
             'https://www.youtube.com/watch?v=',
@@ -161,8 +161,38 @@ auth.onAuthStateChanged((user) => {
             .catch((error) => {
               console.error('Error adding document: ', error);
             });
-
+          console.log(newSrc);
           // ------------------------
+        } else if (
+          inputvalue.includes('https://www.youtube.com/watch?v=') &&
+          inputvalue.includes('&pp=')
+        ) {
+          let newSrc = inputvalue.replace(
+            'https://www.youtube.com/watch?v=',
+            'https://www.youtube.com/embed/'
+          );
+          // newSrc = newSrc.slice(0, newSrc.indexOf('&p'));
+          // console.log(newSrc);
+
+          newSrc = newSrc.slice(0, newSrc.indexOf('&pp='));
+
+          const newDiv = document.createElement('iframe');
+          newDiv.setAttribute('class', 'songvideo');
+          newDiv.setAttribute('src', newSrc);
+          newDiv.setAttribute('width', '420');
+          newDiv.setAttribute('height', '315');
+
+          const existingElement = document.getElementById('songs');
+          existingElement.appendChild(newDiv);
+
+          addDoc(collection(firestore, 'divs'), { newSrc: newSrc })
+            .then((newDocRef) => {
+              console.log('Document written with ID: ', newDocRef.id);
+            })
+            .catch((error) => {
+              console.error('Error adding document: ', error);
+            });
+          console.log(newSrc);
         } else {
           alert('유효한 유튜브 공유 링크를 입력하세요.');
         }
@@ -171,9 +201,11 @@ auth.onAuthStateChanged((user) => {
       add.addEventListener('click', async (event) => {
         event.preventDefault(); // 새로고침 방지
         create();
-        // alert('add successful');
       });
     } else {
+      document.getElementById('sign-out-button').style.display = 'none';
+      document.getElementById('login-button').style.display = 'block ';
+      document.getElementById('searchjoygo').style.display = 'none';
     }
   } else {
     // 로그인되지 않은 경우 로그인 버튼을 표시하고, 로그아웃 버튼을 숨김
